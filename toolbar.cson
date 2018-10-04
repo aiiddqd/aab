@@ -5,9 +5,15 @@
 [
   {
     type: "button"
-    icon: "bookmark"
-    callback: "flex-tool-bar:edit-config-file"
-    tooltip: "Edit Tool Bar"
+    icon: "inbox"
+    callback: "project-manager:list-projects"
+    tooltip: "List Projects"
+  }
+  {
+    type: "button"
+    icon: "briefcase"
+    callback: "application:add-project-folder"
+    tooltip: "Add App"
   }
   {
     type: "spacer"
@@ -34,10 +40,81 @@
   {
     type: "spacer"
   }
+
   {
     type: "button"
     icon: "list-unordered"
     callback: "outline-view:toggle"
     tooltip: "Outline Toggle"
+  }
+  {
+    type: "button"
+    icon: "checklist"
+    callback: "todo-show:toggle"
+    tooltip: "todo-show:toggle"
+  }
+  {
+    type: "button"
+    icon: "versions"
+    callback: "remote-ftp:toggle"
+    tooltip: "FTP"
+  }
+  {
+    type: "spacer"
+  }
+
+  {
+    type: "button"
+    icon: "search"
+    callback: "find-and-replace:show"
+    tooltip: "Find in Buffer"
+    iconset: 'ion'
+  }
+
+  {
+    type: "button"
+    icon: "shuffle"
+    iconset: 'ion'
+    callback: "find-and-replace:show-replace"
+    tooltip: "Replace in Buffer"
+  }
+
+  {
+    type: "spacer"
+  }
+
+  {
+    type: "button"
+    icon: "navicon-round"
+    iconset: 'ion'
+    callback: "command-palette:toggle"
+    tooltip: "Toggle Command Palette"
+  }
+  {
+    type: "button"
+    icon: "gear-a"
+    iconset: 'ion'
+    callback: "settings-view:open"
+    tooltip: "Open Settings View"
+  }
+
+  {
+    type: "spacer"
+  }
+  {
+    type: "button"
+    icon: "dash"
+    callback: "window:run-package-specs"
+    tooltip: "test"
+  }
+  {
+    type: "button"
+    icon: "bookmark"
+    callback: "flex-tool-bar:edit-config-file"
+    tooltip: "Edit Tool Bar"
+  }
+
+  {
+    type: "spacer"
   }
 ]
