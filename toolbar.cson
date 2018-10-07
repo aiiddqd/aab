@@ -11,13 +11,39 @@
   }
   {
     type: "button"
-    icon: "briefcase"
+    icon: "diff-added"
     callback: "application:add-project-folder"
     tooltip: "Add App"
   }
+
   {
     type: "spacer"
   }
+
+
+  {
+    type: "button"
+    icon: "code"
+    callback: "outline-view:toggle"
+    tooltip: "Outline Toggle"
+  }
+  {
+    type: "button"
+    icon: "checklist"
+    callback: "todo-show:toggle"
+    tooltip: "todo-show:toggle"
+  }
+  {
+    type: "button"
+    icon: "versions"
+    callback: "remote-ftp:toggle"
+    tooltip: "FTP"
+  }
+
+  {
+    type: "spacer"
+  }
+
   {
     type: "url"
     icon: "octoface"
@@ -37,28 +63,7 @@
     url: "https://codex.wordpress.org/"
     tooltip: "WordPress Codex"
   }
-  {
-    type: "spacer"
-  }
 
-  {
-    type: "button"
-    icon: "list-unordered"
-    callback: "outline-view:toggle"
-    tooltip: "Outline Toggle"
-  }
-  {
-    type: "button"
-    icon: "checklist"
-    callback: "todo-show:toggle"
-    tooltip: "todo-show:toggle"
-  }
-  {
-    type: "button"
-    icon: "versions"
-    callback: "remote-ftp:toggle"
-    tooltip: "FTP"
-  }
   {
     type: "spacer"
   }
