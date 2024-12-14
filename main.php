@@ -10,8 +10,21 @@
 namespace AAB;
 
 add_filter('aab-actions', __NAMESPACE__ . '\\add_edit_post');
+add_filter('aab-actions', __NAMESPACE__ . '\\add_sitekit_url');
 add_filter('aab-actions', __NAMESPACE__ . '\\add_admin_urls');
 
+
+function add_sitekit_url($actions){
+
+    $url = $_REQUEST['url'] ?? null;
+
+    if($url){
+        $url = admin_url('admin.php?page=googlesitekit-dashboard&permaLink=' . $url);
+        $actions[] = sprintf('<a href="%s">SiteKit</a>', $url);
+    }
+    
+    return $actions;
+}
 
 function add_edit_post($actions)
 {
@@ -27,14 +40,14 @@ function add_edit_post($actions)
         return $actions;
     }
 
-    $actions[] = sprintf('<a href="%s">edit</a>', $url);
+    $actions[] = sprintf('<a href="%s">Edit</a>', $url);
 
     return $actions;
 }
 
 function add_admin_urls($actions)
 {
-    $actions[] = sprintf('<a href="%s">admin</a>', get_admin_url());
+    $actions[] = sprintf('<a href="%s">Admin</a>', get_admin_url());
     $actions[] = sprintf('<a href="%s">add</a>', admin_url('post-new.php?post_type=product'));
 
     return $actions;
