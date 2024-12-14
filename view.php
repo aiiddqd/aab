@@ -27,7 +27,7 @@ $admin_url = admin_url();
 
 
 ?>
-<div class="app-toolbar fixed bottom-10 p-5 rounded-sm bg-slate-300">
+<div class="aab-wrapper">
     
     hi <?= wp_get_current_user()->display_name ?>:
     <a href="<?= $edit_link ?>" target="_blank" rel="noopener noreferrer">edit</a>, 
