@@ -48,7 +48,7 @@ function add_edit_post($actions)
 function add_admin_urls($actions)
 {
     $actions[] = sprintf('<a href="%s">Admin</a>', get_admin_url());
-    $actions[] = sprintf('<a href="%s">add</a>', admin_url('post-new.php?post_type=product'));
+    $actions[] = sprintf('<a href="%s">Add</a>', admin_url('post-new.php?post_type=product'));
 
     return $actions;
 }
