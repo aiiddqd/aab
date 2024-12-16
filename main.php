@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: AAB
+ * Plugin Name: @ AAB
  * Plugin URI: https://github.com/aiiddqd/aab
  * Description: Async Admin Bar - for cached websites and load toolbar asynchronously
  * License: GPL-3.0+
- * Version: 1.0.0
+ * Version: 0.241216
  */
 
 namespace AAB;
