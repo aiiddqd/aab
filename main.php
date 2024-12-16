@@ -25,7 +25,7 @@ add_action('wp_footer', function () {
 
 add_action('htmxer/toolbar', function ($context) {
 
-    if( ! is_user_logged_in()) {
+    if (!is_user_logged_in()) {
         return '';
     }
 
@@ -97,6 +97,10 @@ function add_admin_urls($actions)
 }
 
 
+add_action('wp_enqueue_scripts', function () {
+    $css_file = plugin_dir_path(__FILE__) . 'dist/main.min.css';
+    wp_enqueue_style('aab', plugins_url('dist/main.min.css', __FILE__), [], filemtime($css_file));
+});
 
 
 
