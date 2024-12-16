@@ -9,29 +9,77 @@
 
 namespace AAB;
 
-add_filter('aab-actions', __NAMESPACE__ . '\\add_edit_post');
-add_filter('aab-actions', __NAMESPACE__ . '\\add_sitekit_url');
+use WP_REST_Request;
+
+add_filter('aab-actions', __NAMESPACE__ . '\\add_edit_post', 10, 2);
+add_filter('aab-actions', __NAMESPACE__ . '\\add_sitekit_url', 10, 2);
 add_filter('aab-actions', __NAMESPACE__ . '\\add_admin_urls');
 
+add_action('wp_footer', function () {
+    ?>
+    <div hx-get="/wp-json/htmxer/toolbar" hx-trigger="load delay:0s" hx-swap="outerHTML"></div>
+    <?php
+});
 
-function add_sitekit_url($actions){
+// * url https://example.site/wp-json/htmxer/toolbar
 
-    $url = $_REQUEST['url'] ?? null;
+add_action('htmxer/toolbar', function (WP_REST_Request $request) {
 
-    if($url){
+    $context = $request->get_header('context');
+    if ($context) {
+        $context = json_decode($context, true);
+    }
+    if (empty($context)) {
+        $context = [];
+    }
+
+
+    $actions = apply_filters('aab-actions', [], $context, $request);
+    if (empty($actions)) {
+        return;
+    }
+
+    ?>
+    <div class="aab-wrapper">
+        <div>
+            hi <?= wp_get_current_user()->display_name ?>
+        </div>
+
+        <?php foreach ($actions as $action): ?>
+            <span class="aab-action">
+                <?= $action ?>
+            </span>
+        <?php endforeach; ?>
+    </div>
+    <?php
+
+});
+
+add_filter('htmxer/context', function ($context) {
+    global $wp;
+    $post_id = get_post()->ID ?? null;
+    $context['post_id'] = $post_id;
+    $context['url'] = site_url($wp->request);
+    return $context;
+});
+
+
+function add_sitekit_url($actions, $context)
+{
+    $url = $context['url'] ?? null;
+
+    if ($url) {
         $url = admin_url('admin.php?page=googlesitekit-dashboard&permaLink=' . $url);
         $actions[] = sprintf('<a href="%s">SiteKit</a>', $url);
     }
-    
+
     return $actions;
 }
 
-function add_edit_post($actions)
+function add_edit_post($actions, $context)
 {
 
-    $url = $_REQUEST['url'] ?? null;
-
-    $post_id = url_to_postid($url);
+    $post_id = $context['post_id'] ?? null;
     if ($post_id) {
         $url = get_edit_post_link($post_id);
     }
@@ -53,19 +101,9 @@ function add_admin_urls($actions)
     return $actions;
 }
 
-add_action('wp_footer', function () {
-    ?>
-    <div hx-get="/wp-json/app/v1/toolbar" hx-trigger="load delay:0s" hx-swap="outerHTML"></div>
-    <script>
-        document.body.addEventListener('htmx:configRequest', function (event) {
-            event.detail.parameters['url'] = window.location.href;
-        });
-    </script>
-    <?php
-});
 
 
-add_action('rest_api_init', function () {
+add_action('1rest_api_init', function () {
 
     //hack to fix authentication
     if (wp_is_serving_rest_request()) {
@@ -80,10 +118,10 @@ add_action('rest_api_init', function () {
         'methods' => 'GET',
         'callback' => function () {
             if (!is_user_logged_in()) {
-                return;
+                return new \WP_REST_Response(null, 200);
             }
             if (!current_user_can("administrator")) {
-                return;
+                return new \WP_REST_Response(null, 200);
             }
 
             header('Content-Type: text/html');
