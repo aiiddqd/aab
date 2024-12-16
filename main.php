@@ -3,8 +3,8 @@
  * Plugin Name: AAB
  * Plugin URI: https://github.com/aiiddqd/aab
  * Description: Async Admin Bar - for cached websites and load toolbar asynchronously
- * Version: 1.0.0
  * License: GPL-3.0+
+ * Version: 1.0.0
  */
 
 namespace AAB;
@@ -23,18 +23,13 @@ add_action('wp_footer', function () {
 
 // * url https://example.site/wp-json/htmxer/toolbar
 
-add_action('htmxer/toolbar', function (WP_REST_Request $request) {
+add_action('htmxer/toolbar', function ($context) {
 
-    $context = $request->get_header('context');
-    if ($context) {
-        $context = json_decode($context, true);
-    }
-    if (empty($context)) {
-        $context = [];
+    if( ! is_user_logged_in()) {
+        return '';
     }
 
-
-    $actions = apply_filters('aab-actions', [], $context, $request);
+    $actions = apply_filters('aab-actions', [], $context);
     if (empty($actions)) {
         return;
     }
@@ -103,43 +98,7 @@ function add_admin_urls($actions)
 
 
 
-add_action('1rest_api_init', function () {
 
-    //hack to fix authentication
-    if (wp_is_serving_rest_request()) {
-        global $wp;
-        if ('wp-json/app/v1/toolbar' == $wp->request) {
-            remove_filter('rest_authentication_errors', 'rest_cookie_check_errors', 100);
-        }
-    }
-
-    // /wp-json/app/v1/toolbar
-    register_rest_route('app/v1', '/toolbar', [
-        'methods' => 'GET',
-        'callback' => function () {
-            if (!is_user_logged_in()) {
-                return new \WP_REST_Response(null, 200);
-            }
-            if (!current_user_can("administrator")) {
-                return new \WP_REST_Response(null, 200);
-            }
-
-            header('Content-Type: text/html');
-            include __DIR__ . '/view.php';
-            exit;
-
-        },
-        'permission_callback' => '__return_true',
-    ]);
-});
-
-add_action('wp_enqueue_scripts', function () {
-    $css_file = plugin_dir_path(__FILE__) . 'dist/main.min.css';
-    wp_enqueue_style('aab', plugins_url('dist/main.min.css', __FILE__), [], filemtime($css_file));
-    // wp_style_add_data('aab', 'rel', 'preload');
-    // wp_style_add_data('aab', 'as', 'style');
-
-});
 
 
 add_filter('style_loader_tag', function ($html, $handle) {
