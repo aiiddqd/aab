@@ -7,4 +7,12 @@
   background-color: white;
   border-radius: 0.5rem;
   box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.5);
+  color: gray;
+}
+.aab-wrapper a {
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  background-color: lightgray;
+  color: gray;
+  cursor: pointer;
 }

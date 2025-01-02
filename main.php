@@ -37,13 +37,13 @@ add_action('htmxer/toolbar', function ($context) {
     ?>
     <div class="aab-wrapper">
         <div>
-            hi <?= wp_get_current_user()->display_name ?>
+            <small>hi <?= wp_get_current_user()->display_name ?></small>
         </div>
 
         <?php foreach ($actions as $action): ?>
-            <span class="aab-action">
+            <small class="aab-action">
                 <?= $action ?>
-            </span>
+            </small>
         <?php endforeach; ?>
     </div>
     <?php
