@@ -13,7 +13,7 @@ use WP_REST_Request;
 
 add_filter('aab-actions', __NAMESPACE__ . '\\add_edit_post', 10, 2);
 add_filter('aab-actions', __NAMESPACE__ . '\\add_sitekit_url', 10, 2);
-add_filter('aab-actions', __NAMESPACE__ . '\\add_admin_urls');
+add_filter('aab-actions', __NAMESPACE__ . '\\add_admin_urls', 11, 2);
 
 add_action('wp_footer', function () {
     ?>
