@@ -29,6 +29,10 @@ add_action('htmxer/toolbar', function ($context) {
         return '';
     }
 
+    if (!current_user_can('administrator')) {
+        return '';
+    }
+
     $actions = apply_filters('aab-actions', [], $context);
     if (empty($actions)) {
         return;
